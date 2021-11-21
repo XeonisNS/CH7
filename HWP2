@@ -1,0 +1,76 @@
+/*11/20/2021
+		 * CSC-D11
+		 * Introduction to Java
+		 * Chapter 7 Project Assignment 2
+		 * mxealy0001@student.stcc.edu
+		 * Eliminate duplicate integers
+		 */
+
+		import java.util.Scanner;
+		import java.net.URL;
+		import java.util.*;
+
+		public class HW7CHA3 {
+			private final static String TITLE = "CSC111 Project Template";
+			private final static String CONTINUE_PROMPT = "Do this again? [Y/N] ";
+			
+			//**********************************************
+			// Put as many methods you need here
+			
+			
+			//**********************************************
+			// Start your logic coding in the process method
+			private static void process(Scanner input, String args[]) throws Exception {
+						
+				URL url = new URL("https://cs.stcc.edu/~silvestri/csc111/elimdupsnumbers-1000.txt");
+				Scanner sc = new Scanner(url.openStream());
+				int count = sc.nextInt();
+				int[] arr = new int[count];
+				for (int i = 0; i < count; i++) {
+					double number = sc.nextDouble();
+					System.out.printf("%10.3f\n", number);
+					arr[i] = (int)number;
+				}
+				arr = eliminateDuplicates(arr);
+				System.out.print("The distinct numbers for this array are: ");
+				for (int i=0; i<arr.length; i++) {
+					System.out.print(arr[i] + " ");
+				}
+				System.out.println("\n");
+				sc.close();
+			}
+
+
+			public static int[] eliminateDuplicates(int[] list) {
+				Arrays.sort(list);
+				ArrayList<Integer> arrlist = new ArrayList<Integer>();
+				arrlist.add(list[0]);
+				for(int i=1; i<list.length; i++) {
+					if(list[i] != list[i-1])
+					arrlist.add(list[i]);
+				}
+				return arrlist.stream().mapToInt(Integer::intValue).toArray();
+			}
+			//**********************************************
+			// Do not change the doThisAgain method
+			private static boolean doThisAgain(Scanner input, String prompt) {
+				System.out.print(prompt); 
+				String doOver = input.nextLine();
+				return doOver.trim().equalsIgnoreCase("Y");
+			}
+			
+			//**********************************************
+			// Do not change the main method
+			public static void main(String args[]) throws Exception {
+				System.out.println("Welcome to " + TITLE);
+				Scanner input = new Scanner(System.in);
+				do {
+					process(input, args);
+				} while (doThisAgain(input, CONTINUE_PROMPT));
+				input.close();
+				System.out.println("Thank you for using " + TITLE);
+
+
+	}
+
+}
